@@ -3,15 +3,16 @@
 
 namespace MyApp\Controller;
 
-class IndexController
-{    
+class StudentController
+{
+
     public function indexAction()
     {
-        
+
     }
 
     public function createAction()
     {
-        
+        echo "das ist create/Student";
     }
 }

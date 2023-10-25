@@ -1,4 +1,5 @@
 <?php
+use MyApp\Library\View;
 
 //php.net autoloader
 //include ("datei.php");
@@ -31,6 +32,7 @@ spl_autoload_register(function ($class) {
 
 
 //index.php?controller=index&action=index
+
 $controllerName = ucfirst(isset($_GET['controller']) ? $_GET['controller'] : "index");
 
 $actionName = ucfirst(isset($_GET['action']) ? $_GET['action'] : "index");
@@ -48,9 +50,11 @@ try {
         throw new \Exception("".$controllerClassName."");
     }
 
-
     $controller->$actionMethodName();
 
+    //$path, $controller, $action
+    $view = new MyApp\Library\View(__DIR__ .DIRECTORY_SEPARATOR."views", $_GET['controller'], $_GET['action']);
+    $view->render();
 
 } catch (\Exception $message) {
     echo $message->getMessage();
