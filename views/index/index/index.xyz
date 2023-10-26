@@ -1,1 +1,4 @@
 <p>das ist unsere Index Action im Index Controller</p>
+
+<p>Id: <?php echo $id; ?></p>
+<p>Email: <?php echo  $email; ?></p>

@@ -41,21 +41,13 @@ $controllerClassName = "\\MyApp\\Controller\\".$controllerName."Controller";
 
 $actionMethodName = $actionName."Action";
 
-try {
+$controller = new $controllerClassName();
 
-    $controller = new $controllerClassName();
+//$path, $controller, $action
+$view = new MyApp\Library\View(__DIR__ .DIRECTORY_SEPARATOR."views", lcfirst($controllerName), lcfirst($actionName));
 
-    if(!class_exists($controllerClassName))
-    {
-        throw new \Exception("".$controllerClassName."");
-    }
+$controller->setView($view);
 
-    $controller->$actionMethodName();
+$controller->$actionMethodName();
 
-    //$path, $controller, $action
-    $view = new MyApp\Library\View(__DIR__ .DIRECTORY_SEPARATOR."views", $_GET['controller'], $_GET['action']);
-    $view->render();
-
-} catch (\Exception $message) {
-    echo $message->getMessage();
-}
+$view->render();
