@@ -19,6 +19,43 @@ class IndexController
         $this->view = $view;
         
     }
+
+    public function editAction()
+    {
+        if (isset($_POST)) {
+            var_dump($_POST) ;
+        }
+        
+        //1 Möglichkeit
+        $this->view->setData(array("name"=>$_POST['text1']));
+        
+        $_POST; //Gartsev
+        $_POST["name"] = ";Update users where id= 1; set password = 1234"; //Gartsev
+
+        //$this->view->render();
+
+
+        $accountsModel = new Accounts();
+        $account = $accountsModel->findFirst("1");
+        $account->setFirstname($_POST["text1"]);
+        $account->save();
+        
+        //$account->setFirstname($this->name);
+
+        
+        //2 Möglichkeit
+        //$this->view->setData($_POST);
+
+
+
+
+
+
+        
+    
+    }
+
+
     public function indexAction()
     {
 

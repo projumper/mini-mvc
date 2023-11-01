@@ -29,10 +29,12 @@ class View
     {
         $filename = $this->path.DIRECTORY_SEPARATOR.$this->controllerName.DIRECTORY_SEPARATOR.$this->action.DIRECTORY_SEPARATOR.$this->action.".xyz";    //c:/......../faramwwork-schulung1023/views/stundet/index/index.phtml 
 
-        foreach ($this->data as $key => $value) {
-			$$key = $value;
-            
-		}
+        if(isset($this->data)) {
+            foreach ($this->data as $key => $value) {
+                $$key = $value;
+                
+            }
+        }
         
         include $filename;//index.phtml
     }
