@@ -34,9 +34,15 @@ abstract class BaseModel
         }
         $ops = substr($ops,0,-4);
 
+        //echo "SELECT * FROM ". $table." where ". $ops;
+
         $result = $conn->query("SELECT * FROM ". $table." where ". $ops);
 
-        return $result->fetch_object();
+        while ($row = $result->fetch_object())
+        {
+            $collection = $row;
+        }
+        return $collection;
         
     }
     
@@ -72,6 +78,67 @@ abstract class BaseModel
             $collection[] = $row;
         }
         return $collection;
+    }
+
+    /**
+     *
+     * save all data 
+     * 
+     */
+    public function save()
+    {
+        $conn = $this->getConnection();
+        
+        $table = $this->getSource();
+
+        $thisData = array();
+
+        //kopieren wir die Daten aus $this -> $thisData
+        foreach ($this as $key => $value) {
+            $thisData[$key]=$value;
+        }
+        
+        if(isset($thisData["id"])){
+            //Update
+            //$values = firstname='$firstname', surename='$surename', email='$email'
+            $values = "";
+
+            foreach ($thisData as $key => $value) {
+                
+                if(($key != "id") && ($key != "conn")){
+                   
+                    $values .= $key."='". $value. "', ";
+             
+                }
+            }
+
+            $values = substr($values,0,-2);
+
+            $conn->query("UPDATE ". $table ." SET ".$values." WHERE id=".$thisData['id']);
+
+        }else{
+            //insert
+            //$columns = "firstname, surename, email, girokonto_id, sparbuch_id";
+            $columns = "";
+            //$values = '".$_POST['firstname']."', '".$_POST['surename']."', '".$_POST['email']."', NULL, NULL
+            $values = "";
+
+            foreach ($thisData as $key => $value) {
+                
+                if(($key != "id") && ($key != "conn")){
+                   
+                    $columns .= $key." , ";
+
+                    $values .= "'".$value."', ";
+                }
+            }
+           
+            $columns = substr($columns,0,-2);
+            
+            $values = substr($values,0,-2);
+            
+            $conn->query("INSERT INTO ".$table." (".$columns.") VALUES (". $values .")");
+        }
     }
 
     abstract public function getSource();

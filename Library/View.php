@@ -23,17 +23,28 @@ class View
         }
         
     }
+    public function setDataCollection($data)
+    {
+        $this->data = $data;
+    }
 
 
     public function render()
     {
         $filename = $this->path.DIRECTORY_SEPARATOR.$this->controllerName.DIRECTORY_SEPARATOR.$this->action.DIRECTORY_SEPARATOR.$this->action.".xyz";    //c:/......../faramwwork-schulung1023/views/stundet/index/index.phtml 
 
+        $collection = array();
+
         if(isset($this->data)) {
             foreach ($this->data as $key => $value) {
-                $$key = $value;
                 
+                if(is_object($value)){
+                    $collection[] = $value;            
+                }
+                
+                $$key = $value;
             }
+
         }
         
         include $filename;//index.phtml

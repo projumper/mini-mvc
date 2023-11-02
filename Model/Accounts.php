@@ -75,11 +75,7 @@ class Accounts extends BaseModel
         return $this->email;
     }
 
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */ 
+    
     public function setEmail($email)
     {
         $this->email = $email;

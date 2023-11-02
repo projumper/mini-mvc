@@ -11,13 +11,11 @@ use MyApp\Library\View;
 
 class IndexController
 {
-
     protected $view;
     
     public function setView(View $view)
     {   
-        $this->view = $view;
-        
+        $this->view = $view; 
     }
 
     public function editAction()
@@ -34,38 +32,18 @@ class IndexController
 
         //$this->view->render();
 
-
         $accountsModel = new Accounts();
         $account = $accountsModel->findFirst("1");
         $account->setFirstname($_POST["text1"]);
         $account->save();
-        
-        //$account->setFirstname($this->name);
-
-        
-        //2 Möglichkeit
-        //$this->view->setData($_POST);
-
-
-
-
-
-
-        
-    
     }
 
 
     public function indexAction()
     {
-
-
         $accountsModel = new Accounts();
         $collection = $accountsModel->find();
         $this->view->setData($collection);
-
-  
-
 
         $girokontenModel = new Girokonten();
         //var_dump($girokontenModel->find());
@@ -77,7 +55,6 @@ class IndexController
         $this->view->setData($options);
         
     }
-
     public function createAction()
     {
         
